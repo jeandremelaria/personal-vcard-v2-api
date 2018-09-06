@@ -27,6 +27,7 @@ $app->get('/time', function (Request $request, Response $response) {
     return $this->get('view')->render($response, 'time.twig', $viewData);
 });
 
+// Logger
 $app->get('/logger-test', function (Request $request, Response $response) {
     /** @var Container $this */
     /** @var LoggerInterface $logger */
@@ -39,6 +40,7 @@ $app->get('/logger-test', function (Request $request, Response $response) {
     return $response;
 });
 
+// Databases
 $app->get('/databases', function (Request $request, Response $response) {
     /** @var Container $this */
     /** @var Connection $db */
@@ -50,4 +52,21 @@ $app->get('/databases', function (Request $request, Response $response) {
 
     // return a json response
     return $response->withJson($rows);
+});
+
+// Get User
+$app->get('/user', function (Request $request, Response $response) {
+
+    // Get database
+    $db = $this->get('db');
+
+    $user = $this->db->table('user')
+                ->join('socialmedia', 'user.id', '=', 'socialmedia.id_user')
+                ->select('user.*', 'socialmedia.facebook','socialmedia.instagram', 'socialmedia.twitter', 'socialmedia.dribbble')
+                ->get();
+
+    // Return a json response
+    return $response->withJson($user);
+
+
 });
