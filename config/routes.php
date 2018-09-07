@@ -67,6 +67,33 @@ $app->get('/user', function (Request $request, Response $response) {
 
     // Return a json response
     return $response->withJson($user);
+});
 
+// Update user
+$app->put('/user/update/{id}', function (Request $request, Response $response) {
+    
+    // Get user id
+    $id = $request->getAttribute('id');
 
+    // Get parameters data
+    $data = $request->getParsedBody();
+
+    //  Update user
+    $user_update = $this->db->table('user')
+                    ->where('id', 1)
+                    ->update([
+                        'username' => $data['username'],
+                        'user_password' => $data['user_password'],
+                        'firstname' => $data['firstname'],
+                        'email' => $data['email'],
+                        'phone' => $data['phone'],
+                        'profile_title' => $data['profile_title'],
+                        'profile_photo' => $data['profile_photo'],
+                        'profile_summary' => $data['profile_summary'],
+                        'website_url' => $data['website_url'],
+                        'website_logo' => $data['website_logo']  
+                    ]);
+
+    // Updated user
+    echo 'User updated';
 });
