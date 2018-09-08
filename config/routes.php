@@ -116,7 +116,7 @@ $app->get('/portfolio', function(Request $request, Response $response){
 // get one single portfolio item
 $app->get('/portfolio/item/{portfolio_item_id}', function(Request $request, Response $response){
 
-    // Get id
+    // Get portfolio item id
     $portfolio_item_id = $request->getAttribute('portfolio_item_id');
 
     // Get database
@@ -133,6 +133,27 @@ $app->get('/portfolio/item/{portfolio_item_id}', function(Request $request, Resp
     echo $portfolio_item_id;
 });
 
-// Update single portfolio item
+// Update one portfolio item
+$app->put('/portfolio/item/update/{portfolio_item_id}', function (Request $request, Response $response) {
+    
+    // Get portfolio item id
+    $portfolio_item_id = $request->getAttribute('portfolio_item_id');
+
+    // Get parameters data
+    $data = $request->getParsedBody();
+
+    //  Update one portfolio item
+    $user_update = $this->db->table('portfolioimage')
+                    ->where('id', $portfolio_item_id)
+                    ->update([
+                        'image' => $data['image'], // bind parameters
+                        'model_firstname' => $data['model_firstname'],
+                        'model_lastname' => $data['model_lastname'],
+                        'year' => $data['year'] 
+                    ]);
+
+    // Updated portfolio item
+    echo 'Portfolio item updated';
+});
 
 // Delete portfolio item
