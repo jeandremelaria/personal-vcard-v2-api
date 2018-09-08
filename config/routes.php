@@ -98,7 +98,20 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
     echo 'User updated';
 });
 
-// get portfolio
+// get user portfolio
+$app->get('/portfolio', function(Request $request, Response $response){
+
+    // Get database
+    $db = $this->get('db');
+
+    $user = $this->db->table('user')
+    ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
+    ->select('user.id', 'portfolioimage.*')
+    ->get();
+
+    // Return a json response
+    return $response->withJson($user);
+});
 
 // get one single portfolio item
 
