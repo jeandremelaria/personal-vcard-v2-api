@@ -114,6 +114,24 @@ $app->get('/portfolio', function(Request $request, Response $response){
 });
 
 // get one single portfolio item
+$app->get('/portfolio/item/{portfolio_item_id}', function(Request $request, Response $response){
+
+    // Get id
+    $portfolio_item_id = $request->getAttribute('portfolio_item_id');
+
+    // Get database
+    $db = $this->get('db');
+
+    $portfolio_item = $this->db->table('user')
+                        ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
+                        ->select('portfolioimage.*')
+                        ->where('portfolioimage.id', $portfolio_item_id)
+                        ->get();
+
+    // Return a json response
+    return $response->withJson($portfolio_item);
+    echo $portfolio_item_id;
+});
 
 // Update single portfolio item
 
