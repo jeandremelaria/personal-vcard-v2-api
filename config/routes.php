@@ -79,7 +79,7 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
     $data = $request->getParsedBody();
 
     //  Update user
-    $user_update = $this->db->table('user')
+    $this->db->table('user')
                     ->where('id', $id)
                     ->update([
                         'username' => $data['username'], // bind parameters
@@ -101,13 +101,10 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
 // get user portfolio
 $app->get('/portfolio', function(Request $request, Response $response){
 
-    // Get database
-    $db = $this->get('db');
-
     $user_portfolio = $this->db->table('user')
-    ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
-    ->select('user.id', 'portfolioimage.*')
-    ->get();
+                            ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
+                            ->select('user.id', 'portfolioimage.*')
+                            ->get();
 
     // Return a json response
     return $response->withJson($user_portfolio);
@@ -119,9 +116,6 @@ $app->get('/portfolio/item/{portfolio_item_id}', function(Request $request, Resp
     // Get portfolio item id
     $portfolio_item_id = $request->getAttribute('portfolio_item_id');
 
-    // Get database
-    $db = $this->get('db');
-
     $portfolio_item = $this->db->table('user')
                         ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
                         ->select('portfolioimage.*')
@@ -130,7 +124,6 @@ $app->get('/portfolio/item/{portfolio_item_id}', function(Request $request, Resp
 
     // Return a json response
     return $response->withJson($portfolio_item);
-    echo $portfolio_item_id;
 });
 
 // Update one portfolio item
@@ -143,7 +136,7 @@ $app->put('/portfolio/item/update/{portfolio_item_id}', function (Request $reque
     $data = $request->getParsedBody();
 
     //  Update one portfolio item
-    $user_update = $this->db->table('portfolioimage')
+    $this->db->table('portfolioimage')
                     ->where('id', $portfolio_item_id)
                     ->update([
                         'image' => $data['image'], // bind parameters
@@ -157,3 +150,14 @@ $app->put('/portfolio/item/update/{portfolio_item_id}', function (Request $reque
 });
 
 // Delete portfolio item
+$app->delete('/portfolio/item/delete/{portfolio_item_id}', function (Request $request, Response $response) {
+
+    // Get portfolio item id
+    $portfolio_item_id = $request->getAttribute('portfolio_item_id');
+
+    // Delete one portfolio item
+    $this->db->table('portfolioimage')->delete($portfolio_item_id);
+
+    // Deleted portfolio item
+    echo 'Portfolio item deleted';
+});
