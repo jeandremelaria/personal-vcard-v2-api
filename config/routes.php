@@ -80,9 +80,9 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
 
     //  Update user
     $user_update = $this->db->table('user')
-                    ->where('id', 1)
+                    ->where('id', $id)
                     ->update([
-                        'username' => $data['username'],
+                        'username' => $data['username'], // bind parameters
                         'user_password' => $data['user_password'],
                         'firstname' => $data['firstname'],
                         'email' => $data['email'],
@@ -97,3 +97,11 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
     // Updated user
     echo 'User updated';
 });
+
+// get portfolio
+
+// get one single portfolio item
+
+// Update single portfolio item
+
+// Delete portfolio item
