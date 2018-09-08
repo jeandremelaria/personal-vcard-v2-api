@@ -104,13 +104,13 @@ $app->get('/portfolio', function(Request $request, Response $response){
     // Get database
     $db = $this->get('db');
 
-    $user = $this->db->table('user')
+    $user_portfolio = $this->db->table('user')
     ->join('portfolioimage', 'user.id', '=', 'portfolioimage.id_user')
     ->select('user.id', 'portfolioimage.*')
     ->get();
 
     // Return a json response
-    return $response->withJson($user);
+    return $response->withJson($user_portfolio);
 });
 
 // get one single portfolio item
