@@ -91,7 +91,8 @@ $app->put('/user/update/{id}', function (Request $request, Response $response) {
                         'profile_photo' => $data['profile_photo'],
                         'profile_summary' => $data['profile_summary'],
                         'website_url' => $data['website_url'],
-                        'website_logo' => $data['website_logo']  
+                        'website_logo' => $data['website_logo'],
+                        'website_icon' => $data['website_icon']  
                     ]);
 
     // Updated user
@@ -160,4 +161,26 @@ $app->delete('/portfolio/item/delete/{portfolio_item_id}', function (Request $re
 
     // Deleted portfolio item
     echo 'Portfolio item deleted';
+});
+
+
+// Get Resume
+$app->get('/resume', function (Request $request, Response $response) {
+
+    // Get database
+    $db = $this->get('db');
+
+    $resume = $this->db->table('user')
+                ->join('resume', 'user.id', '=', 'resume.id_user')
+                ->join('experience', 'resume.id_user', '=', 'experience.id_resume')
+
+                ->join('education', 'resume.id_user', '=', 'education.id_resume')
+                ->join('awards', 'resume.id_user', '=', 'awards.id_resume')
+                ->join('tools', 'resume.id_user', '=', 'tools.id_resume')
+
+                ->select('user.id', 'experience.*','education.*', 'awards.*', 'tools.*')
+                ->get();
+
+    // Return a json response
+    return $response->withJson($resume);
 });
