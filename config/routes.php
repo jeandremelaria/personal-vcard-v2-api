@@ -184,3 +184,67 @@ $app->get('/resume', function (Request $request, Response $response) {
     // Return a json response
     return $response->withJson($resume);
 });
+
+// Get update resume ***************************************************************************************
+$app->put('/resume/update/{user_id}', function (Request $request, Response $response) {
+    
+    // Get portfolio item id
+    $user_id = $request->getAttribute('user_id');
+
+    // Get parameters data
+    $data = $request->getParsedBody();
+
+    //  Update one portfolio item
+    // $this->db->table('user')
+    //                 ->join('resume', 'user.id', '=', 'resume.id_user')
+    //                 ->join('experience', 'resume.id_user', '=', 'experience.id_resume')
+    //                 ->join('education', 'resume.id_user', '=', 'education.id_resume')
+    //                 ->join('awards', 'resume.id_user', '=', 'awards.id_resume')
+    //                 ->join('tools', 'resume.id_user', '=', 'tools.id_resume')
+
+    //                 ->where('id', $user_id)
+    //                 ->update([
+    //                     'experience.function' => $data[''], // bind parameters
+    //                     'model_firstname' => $data['model_firstname'],
+    //                     'model_lastname' => $data['model_lastname'],
+    //                     'year' => $data['year'] 
+    //                 ]);
+
+    // Updated portfolio item
+    echo 'Portfolio item updated';
+});
+
+
+// Get costumers
+// $app->get('/costumers', function(Request $request, Response $response){
+
+//     $costumer = $this->db->table('costumer')
+//                             ->select('costumer.*')
+//                             ->get();
+
+//     // Return a json response
+//     return $response->withJson($costumer);
+// });
+
+// // Update costumers
+// $app->put('/costumers/update/{costumers_id}', function (Request $request, Response $response) {
+    
+//     // Get costumers id
+//     $costumers_id = $request->getAttribute('costumers_id');
+
+//     // Get parameters data
+//     $data = $request->getParsedBody();
+
+//     // //  Update one costumer
+//     // $this->db->table('costumer')
+//     //                 ->where('id', $costumers_id )
+//     //                 ->update([
+//     //                     'firstname' => $data['firstname'], // bind parameters
+//     //                     'lastname' => $data['lastname'],
+//     //                     'email' => $data['email'],
+//     //                 ]);
+
+//     // // Updated portfolio item
+//     // echo 'Costumer updated';
+//     var_dump($data);
+// });
